@@ -6,10 +6,7 @@ import com.example.AuthenticationServer.Service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -26,6 +23,14 @@ public class API {
 
     @PostMapping("/login")
     public ResponseEntity<String> checkUserCredentials(@Validated @RequestBody UserDTO userDTO){
-        return ResponseEntity.ok(userService.checkCredentials(userDTO));
+        String token = userService.checkCredentials(userDTO);
+        return ResponseEntity.ok(token);
+    }
+
+    @DeleteMapping("/deleteUser")
+    public ResponseEntity<UserDTO> deleteUser(@RequestParam("email") String email){
+        UserDTO userDTO = userService.deleteUser(email);
+        return ResponseEntity
+                .ok(userDTO);
     }
 }

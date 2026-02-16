@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -46,5 +47,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> user = Optional.of(repo.findById(email).orElseThrow());
         return user.get();
+    }
+
+    @Override
+    public UserDTO deleteUser(String email){
+//        Check if the user exist or not...
+        User user = (User) loadUserByUsername(email);
+        repo.deleteById(email);
+        UserDTO userDTO = UserDTO
+                .builder()
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .build();
+        return userDTO;
     }
 }
