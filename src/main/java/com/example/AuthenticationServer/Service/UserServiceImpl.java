@@ -23,18 +23,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder encoder;
     private final JWTUtility jwtUtility;
     @Override
-    public UserDTO persistUser(UserDTO userDTO) throws EmailExistException {
+    public String persistUser(UserDTO userDTO) throws EmailExistException {
           if(isUserExist(userDTO.getEmail())){
               throw new EmailExistException(userDTO.getEmail());
           }
           User user = userDTO.DTOToEntity(userDTO,encoder);
           repo.save(user);
-          return
-                  UserDTO
-                          .builder()
-                          .email(user.getEmail())
-                          .password(user.getPassword())
-                          .build();
+//         Now generate token...
+        String token = generateToken(user.getEmail());
+        return token;
+
     }
 
     @Override
@@ -47,8 +45,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public String checkCredentials(UserDTO userDTO)  {
 //        User implements UserDetails...
           User user = (User) loadUserByUsername(userDTO.getEmail());
-         String token = jwtUtility.generateToken(userDTO.getEmail());
-         return token;
+          String token = generateToken(user.getEmail());
+          return token;
     }
 
     @Override
@@ -84,6 +82,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                             .email(user.getEmail())
                             .password(user.getPassword())
                             .build();
+    }
+
+    public String generateToken(String email){
+        return jwtUtility.generateToken(email);
     }
 
 

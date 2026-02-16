@@ -1,13 +1,10 @@
 package com.example.AuthenticationServer.DTO;
 
 import com.example.AuthenticationServer.Model.User;
-import jakarta.annotation.PostConstruct;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 
 @Slf4j
 @AllArgsConstructor
