@@ -2,7 +2,7 @@ package com.example.AuthenticationServer.Service;
 
 import com.example.AuthenticationServer.DTO.UserDTO;
 import com.example.AuthenticationServer.Exception.EmailExistException;
-import com.example.AuthenticationServer.Exception.EmailNotFoundedException;
+import com.example.AuthenticationServer.JWT.JWTUtility;
 import com.example.AuthenticationServer.Model.User;
 import com.example.AuthenticationServer.Repository.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +16,24 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+
 public class UserServiceImpl implements UserService, UserDetailsService {
-    private final UserDTO userDTO;
     private final UserRepo repo;
+    private final PasswordEncoder encoder;
+    private final JWTUtility jwtUtility;
     @Override
     public UserDTO persistUser(UserDTO userDTO) throws EmailExistException {
           if(isUserExist(userDTO.getEmail())){
               throw new EmailExistException(userDTO.getEmail());
           }
-          User user = userDTO.DTOToEntity(userDTO);
+          User user = userDTO.DTOToEntity(userDTO,encoder);
           repo.save(user);
-          return userDTO;
+          return
+                  UserDTO
+                          .builder()
+                          .email(user.getEmail())
+                          .password(user.getPassword())
+                          .build();
     }
 
     @Override
@@ -38,8 +45,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public String checkCredentials(UserDTO userDTO)  {
 //        User implements UserDetails...
-        User user = (User) loadUserByUsername(userDTO.getEmail());
-         String token = "";
+          User user = (User) loadUserByUsername(userDTO.getEmail());
+         String token = jwtUtility.generateToken(userDTO.getEmail());
          return token;
     }
 
