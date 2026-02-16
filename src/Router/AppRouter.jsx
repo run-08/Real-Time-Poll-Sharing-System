@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { Logout } from "../Authentication/Logout";
 import SignUp from "../Authentication/Signup";
 import { HomePage } from "../Component/HomePage";
 import { Poll } from "../Component/Poll";
@@ -9,6 +10,7 @@ export const AppRouter = () => {
           </Route> 
           <Route path="/poll/:pollId" element={<Poll></Poll>}></Route> 
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
+          <Route path="/logout" element={<Logout></Logout>}></Route>
        </Routes>
     );
 }

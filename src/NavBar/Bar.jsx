@@ -11,10 +11,10 @@ export const Bar = () => {
             >You Voted</span>
             <span
             className="cursor-pointer text-white text-2xl py-2 px-7  underline-offset-3 hover:underline" 
-            >Dashboard</span>
+            >Profile</span>
             <span
             className="cursor-pointer text-white text-2xl py-2 px-7  underline-offset-6 hover:underline" 
-            >Logout</span>
+            ><a href="/logout">Logout</a></span>
         </div>
       </div>
    );

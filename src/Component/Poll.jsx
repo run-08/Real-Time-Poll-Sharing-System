@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Bar } from "../NavBar/Bar";
 export const Poll = () => {
     const [isUserSelected,setIsUserSelected] = useState(false);
     const[userSelectedOption,setUserSelectedOption] = useState(null);
@@ -22,6 +23,8 @@ export const Poll = () => {
         return;
     };
   return (
+    <>
+    <Bar></Bar>
      <div 
      className="container  min-h-screen flex flex-col justify-center items-center m-0 p-0 min-w-screen bg-gradient-to-br from-[#7c42da] via-[#d11bb4] to-[#e5e500]">
         <div className="poll">
@@ -49,5 +52,6 @@ export const Poll = () => {
              </div>
         </div>
      </div>
+    </>
   )
 }

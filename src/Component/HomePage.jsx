@@ -24,7 +24,6 @@ export const HomePage = () => {
                        className="cursor-pointer border-2 rounded-2xl py-2 px-5 text-white font-bold text-xl  mx-1"
                        onClick={() => setIsPoll(true)}
                        >Yes</span>
-                       <span className="cursor-pointer border-2 rounded-2xl py-2 px-5 text-white font-bold text-xl  mx-1">No</span>
                     </div>
                 </div>
             </div>
