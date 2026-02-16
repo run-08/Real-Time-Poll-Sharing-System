@@ -23,4 +23,9 @@ public class API {
         return ResponseEntity
                 .ok(userDTO);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> checkUserCredentials(@Validated @RequestBody UserDTO userDTO){
+        return ResponseEntity.ok(userService.checkCredentials(userDTO));
+    }
 }
