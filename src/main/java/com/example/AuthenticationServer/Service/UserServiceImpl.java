@@ -2,6 +2,7 @@ package com.example.AuthenticationServer.Service;
 
 import com.example.AuthenticationServer.DTO.UserDTO;
 import com.example.AuthenticationServer.Exception.EmailExistException;
+import com.example.AuthenticationServer.Exception.EmailNotFoundedException;
 import com.example.AuthenticationServer.JWT.JWTUtility;
 import com.example.AuthenticationServer.Model.User;
 import com.example.AuthenticationServer.Repository.UserRepo;
@@ -68,4 +69,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .build();
         return userDTO;
     }
+
+        @Override
+        public UserDTO updateUser(UserDTO userDTO) throws EmailNotFoundedException {
+            //        Check if the user exist or not...
+            if(!isUserExist(userDTO.getEmail())){
+                throw new EmailNotFoundedException(userDTO.getEmail());
+            }
+            User user  = userDTO.DTOToEntity(userDTO,encoder);
+            repo.save(user);
+            return
+                    UserDTO
+                            .builder()
+                            .email(user.getEmail())
+                            .password(user.getPassword())
+                            .build();
+    }
+
+
 }

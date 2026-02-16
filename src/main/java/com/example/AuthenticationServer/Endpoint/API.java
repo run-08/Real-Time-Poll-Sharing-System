@@ -2,6 +2,8 @@ package com.example.AuthenticationServer.Endpoint;
 
 import com.example.AuthenticationServer.DTO.UserDTO;
 import com.example.AuthenticationServer.Exception.EmailExistException;
+import com.example.AuthenticationServer.Exception.EmailNotFoundedException;
+import com.example.AuthenticationServer.Model.User;
 import com.example.AuthenticationServer.Service.UserServiceImpl;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +37,12 @@ public class API {
         UserDTO userDTO = userService.deleteUser(email);
         return ResponseEntity
                 .ok(userDTO);
+    }
+
+        @PutMapping("/updateUser")
+    public ResponseEntity<UserDTO> updateUser(@Validated @RequestBody UserDTO userDTO) throws EmailNotFoundedException {
+         userDTO = userService.updateUser(userDTO);
+         return ResponseEntity
+                 .ok(userDTO);
     }
 }
