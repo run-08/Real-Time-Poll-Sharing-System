@@ -1,17 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import shine from "../assets/shine.svg";
+import { PollSaving } from "./Pollsaving";
 export const PollOptions = ({question}) => {
     const[options,setOptions] = useState([]);
     const[data,setData] = useState("")
     const[isAddOption,setIsAdOption]= useState();
    const navigate = useNavigate();
    const token = localStorage.getItem("token");
+
+    const savePollInDB =  () => {
+        PollSaving(question,options,pollId,navigate);
+    } 
+   const[pollId,setPollId] = useState(null)
   useEffect(()=>{
          const token = localStorage.getItem("token");
           if(token === undefined || token === null){
           navigate("/signup");
           return;
+      }
+      if(pollId == null){
+        const newPollId = crypto.randomUUID();
+        setPollId(newPollId);
       }
     },[]);
     return (
@@ -67,12 +77,7 @@ export const PollOptions = ({question}) => {
                <div className="border-2 cursor-pointer flex py-2 border-white text-white font-bold px-3  rounded-xl ">
                    
                     <span
-                    onClick={()=>navigate("poll/123",{
-                        state:{
-                            question:question,
-                            options:options,
-                        }
-                    })}
+                    onClick={()=>savePollInDB()}
                      className="text-white">Create Poll</span>
                      <img 
                     src={shine} 
@@ -80,5 +85,6 @@ export const PollOptions = ({question}) => {
                 </div>
             </div>
         </div>
-    )
+    );
+   
 }
