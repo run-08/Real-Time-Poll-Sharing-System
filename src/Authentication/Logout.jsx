@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-
 export const Logout = () => {
     const navigate = useNavigate();
     return (
@@ -12,6 +11,8 @@ export const Logout = () => {
                    <span 
                    onClick={() => {
                     localStorage.removeItem("token");
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("email");
                     navigate("/signup")}
                    }
                    className="border border-white text-2xl outline-white hover:opacity-70 bg-red-500 text-white px-4 py-2 rounded-xl cursor-pointer"> 

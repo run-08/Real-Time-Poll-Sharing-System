@@ -1,3 +1,4 @@
+
 export const GenerateToken = async({formData,isSignUp}) => {
     try{
         const URL = `http://localhost:1000/api/${isSignUp ? "signup":"login"}`
@@ -17,6 +18,8 @@ export const GenerateToken = async({formData,isSignUp}) => {
         console.log(token);
         alert("Logged successfully!");
         localStorage.setItem("token",token);
+        localStorage.setItem("name",formData.name);
+        localStorage.setItem("email",formData.email);
     }
     catch(error){
         console.log("Error: ",error);

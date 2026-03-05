@@ -3,22 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { GenerateToken } from "./GenerateToken";
 import { validateEmail } from "./ValidateEmail";
 import { validatePassword } from "./ValidatePassword";
+import { ValidateUserName } from "./ValidateUserName";
 const SignUp = () => {
-    const[email,setEmail] = useState(null); 
-    const[password,setPassword] = useState(null);
+    const[userEmail,setUserEmail] = useState(null); 
+    const[userPassword,setUserPassword] = useState(null);
+    const[userName,setUserName] = useState(null);
     const[isSignUp,setisSignUp] = useState(true);
     const[isInvalidEmail,setIsInValidEmail] = useState(false);
     const[isInvalidPassword,setIsInValidPassword] = useState(false);
+    const[isInvalidName,setInvalidName] = useState(false);
+
     const navigator = useNavigate();
     const validateForm = async(e) => {
         e.preventDefault();
+        if(!ValidateUserName(name)){    
+            setInvalidName(true);
+        }
         if(!validateEmail(email)){
             setIsInValidEmail(true);
         }
         else{
             setIsInValidEmail(false);
         }
-        if(!validatePassword(password)){
+        if(!validatePassword(userPassword)){
             setIsInValidPassword(true);
         }
         else{
@@ -26,8 +33,9 @@ const SignUp = () => {
         }
         // Now get token from Authentication Server and get into Resource server....
         const formData = {
-            email:email,
-            password:password,
+            email:userEmail,
+            password:userPassword,
+            name:userName,
         }
         const flag = await GenerateToken({formData,isSignUp});
         console.log(flag);
@@ -35,7 +43,7 @@ const SignUp = () => {
             navigator("/");
         }
     }
-    // const[eye,setEye] = useState(eyeIcon);
+
      return(
         <div 
         className="container min-h-screen flex flex-col justify-center items-center m-0 p-0 min-w-screen bg-gradient-to-br from-[#7c42da] via-[#d11bb4] to-[#e5e500]">
@@ -44,6 +52,23 @@ const SignUp = () => {
                      <span className="text-black text-2xl ">{isSignUp ? "Register" : "Login to "} Your Account</span>
                   </div>
                 <form className="">
+                     {isSignUp && <div className="email-field px-5 my-2 ">
+                            <label 
+                             htmlFor="name"
+                              className="text-white font-bold text-xl">Name </label>
+                          <input 
+                           type="text" 
+                           name="name" 
+                           id="name" 
+                           placeholder="Enter your name"
+                           onChange={(e)=>{
+                             setUserName(e.target.value);
+                           }}   
+                           className="border w-60 md:w-80 border-white text-xl bg-white text-black font-bold outline-white px-2 py-2 rounded-xl mx-2 my-2"
+                        />
+                    </div>}
+                    {isInvalidName && <span className="text-red-400 mx-10 bg-gray-200 rounded-md px-2  ">Invalid Name!</span>}
+
                      <div className="email-field px-5 my-2 ">
                             <label 
                              htmlFor="email"
@@ -54,7 +79,7 @@ const SignUp = () => {
                            id="email" 
                            placeholder="Enter your Email"
                            onChange={(e)=>{
-                             setEmail(e.target.value);
+                             setUserEmail(e.target.value);
                            }}   
                            className="border w-60 md:w-80 border-white text-xl bg-white text-black font-bold outline-white px-2 py-2 rounded-xl mx-2 my-2"
                         />
@@ -70,7 +95,7 @@ const SignUp = () => {
                            id="Password" 
                            placeholder="Enter your Password"    
                            onChange={(e) => {
-                            setPassword(e.target.value);
+                            setUserPassword(e.target.value);
                            }}
                            className="border border-white w-60 md:w-80 text-xl bg-white text-black font-bold outline-white px-2 py-2 rounded-xl mx-2 my-2"
                         />
@@ -79,6 +104,7 @@ const SignUp = () => {
                         {/* <img src={eye}
                          className="w-6 h-6  rounded-2xl border bg-white relative m-0 p-0 float-end my-5 cursor-pointer"/> */}
                     </div>
+                    
                     <div className="submit-button cursor-pointer hover:bg-black hover:text-white text-center h-10 rounded-mid flex items-center justify-center bg-white">
                        <button 
                        type="submit"
@@ -102,6 +128,7 @@ const SignUp = () => {
                         >{isSignUp ? "Click here" : "signup"}</a>
                     </span>
                 </div>
+                {!isSignUp && <span className={`underline underline-offset-3  text-white ${isSignUp ? 'none' : 'block'} cursor-pointer hover:text-teal-500`}> Forgot Password?</span>}
         </div>
      );
 }

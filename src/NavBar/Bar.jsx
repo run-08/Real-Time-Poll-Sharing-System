@@ -3,21 +3,21 @@ import { useNavigate } from "react-router-dom";
 export const Bar = () => {
    const navigate = useNavigate();
    return (
-      <div className="navbar h-13 absolute grid grid-cols-2  items-center border-2 border-transparent border-b-gray-200 outline-white min-w-screen m-0 p-0">
-        <div className=""></div>
-        <div className="pl-20">
+      <div className="navbar ">
+        <div className="flex gap-20 border bg-transparent transition-all border-transparent border-b-white  p-1 justify-end flex-wrap md:float-end">
             <span
-            className="cursor-pointer text-white underline-offset-3 transition hover:underline  rounded-xl text-2xl  px-7" 
+            className="cursor-pointer underline-offset-3 transition hover:underline  rounded-xl text-2xl " 
             onClick={()=>navigate("/userPolls")}
             >Your Polls</span>
             <span
-            className="cursor-pointer text-white text-2xl py-2 px-7  underline-offset-3 hover:underline" 
+            className="cursor-pointer  text-2xl  underline-offset-3 hover:underline" 
             >You Voted</span>
+            <spa
+            className="cursor-pointer text-2xl  underline-offset-3 hover:underline" 
+            >
+               <a href="/profile">Profile</a></spa>
             <span
-            className="cursor-pointer text-white text-2xl py-2 px-7  underline-offset-3 hover:underline" 
-            >Profile</span>
-            <span
-            className="cursor-pointer text-white text-2xl py-2 px-7  underline-offset-6 hover:underline" 
+            className="cursor-pointer  text-2xl   underline-offset-6 hover:underline" 
             ><a href="/logout">Logout</a></span>
         </div>
       </div>
