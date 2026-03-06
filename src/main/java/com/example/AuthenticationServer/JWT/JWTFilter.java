@@ -21,7 +21,8 @@ public class JWTFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path =  request.getRequestURI();
 //        System.out.println("\nPath: "+(path));
-        if(path.equals("/api/signup") || path.equals("/api/login")){
+        if(path.equals("/api/signup") || path.equals("/api/login") || path.equals("/api/sendOTP")){
+//            System.out.println(request.get);
             filterChain.doFilter(request,response);
             return;
         }

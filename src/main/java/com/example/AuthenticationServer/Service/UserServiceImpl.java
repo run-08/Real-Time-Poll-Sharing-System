@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -30,9 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
           User user = userDTO.DTOToEntity(userDTO,encoder);
           repo.save(user);
 //         Now generate token...
-        String token = generateToken(user.getEmail());
-        return token;
-
+        return generateToken(user.getEmail());
     }
 
     @Override
@@ -45,8 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public String checkCredentials(UserDTO userDTO)  {
 //        User implements UserDetails...
           User user = (User) loadUserByUsername(userDTO.getEmail());
-          String token = generateToken(user.getEmail());
-          return token;
+        return generateToken(user.getEmail());
     }
 
     @Override
@@ -60,12 +58,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 //        Check if the user exist or not...
         User user = (User) loadUserByUsername(email);
         repo.deleteById(email);
-        UserDTO userDTO = UserDTO
+        return UserDTO
                 .builder()
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .userName(user.getUsername())
                 .build();
-        return userDTO;
     }
 
         @Override
@@ -81,12 +79,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                             .builder()
                             .email(user.getEmail())
                             .password(user.getPassword())
+                            .userName(user.getUsername())
                             .build();
+    }
+
+    @Override
+    public UserDTO changePassword(Map<String, String> map) throws EmailNotFoundedException {
+        String email = map.get("email");
+        String password =  map.get("password");
+        if(!isUserExist(email)){
+            throw new EmailNotFoundedException(email);
+        }
+        User user = repo.findById(email).get();
+        user.setPassword(password);
+        repo.save(user);
+        UserDTO userDTO =user.EntityToDTO(user);
+        return userDTO;
     }
 
     public String generateToken(String email){
         return jwtUtility.generateToken(email);
     }
-
 
 }

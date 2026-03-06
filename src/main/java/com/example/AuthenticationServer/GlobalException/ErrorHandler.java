@@ -2,6 +2,7 @@ package com.example.AuthenticationServer.GlobalException;
 
 import com.example.AuthenticationServer.Exception.EmailExistException;
 import com.example.AuthenticationServer.Exception.EmailNotFoundedException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @ControllerAdvice
 public class ErrorHandler {
     @ExceptionHandler(Exception.class)
@@ -17,6 +19,7 @@ public class ErrorHandler {
         Map<String,String> errorMessage = new HashMap<>();
         errorMessage.put("Date And Time: ", LocalDateTime.now().toString());
         errorMessage.put("Error: ",ex.getMessage());
+        log.error("Error: "+ex.getMessage());
         return ResponseEntity
                 .internalServerError()
                 .body(errorMessage);
@@ -26,6 +29,7 @@ public class ErrorHandler {
         Map<String,String> errorMessage = new HashMap<>();
         errorMessage.put("Date And Time: ", LocalDateTime.now().toString());
         errorMessage.put("Error: ",ex.getMessage());
+        log.error("Error: "+ex.getMessage());
         return ResponseEntity
                 .internalServerError()
                 .body(errorMessage);
@@ -35,6 +39,7 @@ public class ErrorHandler {
         Map<String,String> errorMessage = new HashMap<>();
         errorMessage.put("Date And Time: ", LocalDateTime.now().toString());
         errorMessage.put("Error: ",ex.getMessage());
+        log.error("Error: "+ex.getMessage());
         return ResponseEntity
                 .internalServerError()
                 .body(errorMessage);

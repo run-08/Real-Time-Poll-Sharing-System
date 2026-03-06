@@ -15,11 +15,12 @@ public class UserDTO {
     UserDTO(){
 
     }
-
     @NotNull
     private String email;
     @NonNull
     private String password;
+    @NonNull
+    private String userName;
 
     public String getEmail() {
         return email;

@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private String email;
     @Column(name="password",nullable = false)
     private String password;
+    private String userName;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 //        No roles required for this application...
