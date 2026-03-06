@@ -17,6 +17,7 @@ export const GenerateToken = async({formData,isSignUp}) => {
         const token = await response.text();
         console.log(token);
         alert("Logged successfully!");
+        console.log(formData);
         localStorage.setItem("token",token);
         localStorage.setItem("name",formData.name);
         localStorage.setItem("email",formData.email);

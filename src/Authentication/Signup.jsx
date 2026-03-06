@@ -128,7 +128,9 @@ const SignUp = () => {
                         >{isSignUp ? "Click here" : "signup"}</a>
                     </span>
                 </div>
-                {!isSignUp && <span className={`underline underline-offset-3  text-white ${isSignUp ? 'none' : 'block'} cursor-pointer hover:text-teal-500`}> Forgot Password?</span>}
+                {!isSignUp && <span 
+                onClick={(e) => navigator("/setNewPassword")}
+                className={`underline underline-offset-3  text-white ${isSignUp ? 'none' : 'block'} cursor-pointer hover:text-teal-500`}> Forgot Password?</span>}
         </div>
      );
 }

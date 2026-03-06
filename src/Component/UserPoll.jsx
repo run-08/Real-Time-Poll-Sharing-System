@@ -34,14 +34,14 @@ export const UserPoll = () => {
     fetchUserPoll();
     },[]);
     return(
-      <div className="container min-h-screen flex flex-col justify-center items-center m-0 p-0 min-w-screen bg-gradient-to-br from-[#7c42da] via-[#d11bb4] to-[#e5e500]">
-           <div className="grid  xl:grid-cols-2 gap-10 py-20 my-4">
-            {   
+      <div className="container min-h-screen flex flex-col justify-center items-center min-w-screen bg-gradient-to-br from-[#7c42da] via-[#d11bb4] to-[#e5e500]">
+           <div className="grid xl:grid-cols-2 gap-10 py-20 my-4">
+            {       
                userPoll.map((items,key) => (
-                   <div className="poll  px-20 hover:scale-y-115 transition-all">
+                   <div className="poll hover:py-3 hover:scale-y-115 transition-all">
             {/* <question styleName={}></question> */}
             <div  key={key}
-            className="question-box   bg-black w-75 md:w-150 lg:w-180 text-white border px-6 py-10 wrap-break-word text-center text-3xl rounded-t-xl cursor-pointer  border-black ">
+            className="question-box  bg-black w-75 md:w-150 lg:w-180 text-white border px-6 py-10 wrap-break-word text-center text-3xl rounded-t-xl cursor-pointer  border-black ">
                 {items?.question}
             </div>
             {/* options... */}
