@@ -31,7 +31,8 @@ const NewPasswordSetter = () => {
             navigate("/signup");
          }
          else{
-            alert(response.status);
+            const map_error = await response.json();
+            alert(map_error?.Error);
          }
       }
       else{
@@ -112,7 +113,9 @@ const NewPasswordSetter = () => {
            body:JSON.stringify(emailRequest),
         })
         if(!response.ok){
-            alert("No, Invalid OTP!")
+            const map_error = await response.json();
+            console.log(map_error);
+            alert(map_error?.Error);
         }
         else{
            setEnableDigitOTP(true);

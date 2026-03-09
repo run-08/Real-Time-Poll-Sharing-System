@@ -32,7 +32,7 @@ const SignUp = () => {
         }
         else{
             setIsInValidEmail(false);
-        }
+        }   
         if(!validatePassword(userPassword)){
             setIsInValidPassword(true);
             return;

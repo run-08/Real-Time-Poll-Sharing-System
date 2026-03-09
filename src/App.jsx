@@ -3,7 +3,6 @@ const App = () => {
   return (
 
     <>
-
        <AppRouter></AppRouter>
     </>
   )

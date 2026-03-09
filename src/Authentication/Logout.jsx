@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { Bar } from "../NavBar/Bar";
 export const Logout = () => {
     const navigate = useNavigate();
     return (
+        <>
+        <Bar></Bar>
         <div className="container  min-h-screen flex flex-col justify-center items-center m-0 p-0 min-w-screen bg-gradient-to-br from-[#7c42da] via-[#d11bb4] to-[#e5e500]">
             <div className="logout-box justify-center flex flex-col items-center outline-white rounded-xl w-70 md:w-100 h-100 bg-gray-100">
                 <span className="text-black border px-2 py-2 rounded-xl text-2xl border-white bg-gray-200">
@@ -24,6 +27,7 @@ export const Logout = () => {
                 </div>
             </div>
         </div>
+        </>
     );
     
 }

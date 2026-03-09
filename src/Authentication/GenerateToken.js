@@ -1,4 +1,3 @@
-
 export const GenerateToken = async({formData,isSignUp}) => {
     try{
         const URL = `http://localhost:1000/api/${isSignUp ? "signup":"login"}`
@@ -14,12 +13,18 @@ export const GenerateToken = async({formData,isSignUp}) => {
           alert("Failed to Authenticate...")
           return false;
         }
-        const token = await response.text();
-        console.log(token);
+        if(!isSignUp){
+            const details = await response.json();
+            console.log(details);
+            localStorage.setItem("name",details?.name);
+            const token = details?.token;
+            localStorage.setItem("token",token);
+        }
+        else{
+          const token = await response.text();
+          localStorage.setItem("token",token);
+        }
         alert("Logged successfully!");
-        console.log(formData);
-        localStorage.setItem("token",token);
-        localStorage.setItem("name",formData.name);
         localStorage.setItem("email",formData.email);
     }
     catch(error){

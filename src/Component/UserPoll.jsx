@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Bar } from "../NavBar/Bar";
 export const UserPoll = () => {
     const[userPoll,setUserPoll] = useState([]);
     const navigate = useNavigate();
@@ -34,6 +34,8 @@ export const UserPoll = () => {
     fetchUserPoll();
     },[]);
     return(
+        <>
+          <Bar></Bar>
       <div className="container min-h-screen flex flex-col justify-center items-center min-w-screen bg-gradient-to-br from-[#7c42da] via-[#d11bb4] to-[#e5e500]">
            <div className="grid xl:grid-cols-2 gap-10 py-20 my-4">
             {       
@@ -78,5 +80,6 @@ export const UserPoll = () => {
             }
            </div>
        </div>
+       </>
     );
 }
