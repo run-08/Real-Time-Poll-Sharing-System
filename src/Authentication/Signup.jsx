@@ -1,42 +1,74 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GenerateToken } from "./GenerateToken";
+import { ValidateAge } from "./ValidateAge";
 import { validateEmail } from "./ValidateEmail";
+import { ValidateLocation } from "./ValidateLocation";
 import { validatePassword } from "./ValidatePassword";
 import { ValidateUserName } from "./ValidateUserName";
 const SignUp = () => {
     const[userEmail,setUserEmail] = useState(null); 
     const[userPassword,setUserPassword] = useState(null);
     const[userName,setUserName] = useState(null);
+    const[userAge,setUserAge] = useState(null);
+    const[userLocation,setUserLocation] = useState(null);
     const[isSignUp,setisSignUp] = useState(true);
     const[isInvalidEmail,setIsInValidEmail] = useState(false);
     const[isInvalidPassword,setIsInValidPassword] = useState(false);
     const[isInvalidName,setInvalidName] = useState(false);
+    const[isInvalidLocation,setInvalidLocation] = useState(false);
+    const[isInvalidAge,setInvalidAge] = useState(false);
 
     const navigator = useNavigate();
     const validateForm = async(e) => {
         e.preventDefault();
-        if(!ValidateUserName(name)){    
+        if(isSignUp && !ValidateUserName(userName)){    
             setInvalidName(true);
+            return;
         }
-        if(!validateEmail(email)){
+        if(!validateEmail(userEmail)){
             setIsInValidEmail(true);
+            return;
         }
         else{
             setIsInValidEmail(false);
         }
         if(!validatePassword(userPassword)){
             setIsInValidPassword(true);
+            return;
         }
         else{
             setIsInValidPassword(false);
         }
+        if(isSignUp && !ValidateAge(userAge)){
+            setInvalidAge(true);
+            return;
+        }
+        else{
+            setInvalidAge(false);
+        }
+        if(isSignUp && !ValidateLocation(userLocation)){
+            setInvalidLocation(true);
+            return;
+        }
+        else{
+            setInvalidLocation(false);
+        }
         // Now get token from Authentication Server and get into Resource server....
-        const formData = {
+        let formData = {
             email:userEmail,
             password:userPassword,
             name:userName,
+            location:userLocation,
+            age:userAge,
         }
+        if(!isSignUp){
+            formData = {
+            email:userEmail,
+            password:userPassword,
+            }
+        }
+        console.log(formData);
         const flag = await GenerateToken({formData,isSignUp});
         console.log(flag);
         if(flag){
@@ -85,6 +117,7 @@ const SignUp = () => {
                         />
                         {isInvalidEmail && <span className="text-red-400 mx-10 bg-gray-200 rounded-md px-2  ">Invalid Email!</span>}
                     </div>
+                    
                     <div className="password-field px-5 my-2 ">
                         <label 
                              htmlFor="Password"
@@ -104,11 +137,44 @@ const SignUp = () => {
                         {/* <img src={eye}
                          className="w-6 h-6  rounded-2xl border bg-white relative m-0 p-0 float-end my-5 cursor-pointer"/> */}
                     </div>
-                    
-                    <div className="submit-button cursor-pointer hover:bg-black hover:text-white text-center h-10 rounded-mid flex items-center justify-center bg-white">
+                    {isSignUp && <div className="age-field px-5 my-2 ">
+                            <label 
+                             htmlFor="age"
+                              className="text-white font-bold text-xl">Age</label>
+                          <input 
+                           type="text" 
+                           name="age" 
+                           id="age" 
+                           placeholder="Enter your age"
+                           onChange={(e)=>{
+                             setUserAge(e.target.value);
+                           }}   
+                           className="border w-60 md:w-80  border-white text-xl bg-white text-black font-bold outline-white px-2 py-2 rounded-xl mx-2 my-2"
+                        />
+                        {isInvalidAge  && <span className="text-red-400 mx-10 bg-gray-200 rounded-md px-2  ">Invalid Age!</span>}
+
+                    </div>}
+                    {isSignUp && <div className="location-field px-5 my-2 ">
+                            <label 
+                             htmlFor="location"
+                              className="text-white font-bold text-xl">Location</label>
+                          <input 
+                           type="text" 
+                           name="location" 
+                           id="location" 
+                           placeholder="Enter your location"
+                           onChange={(e)=>{
+                             setUserLocation(e.target.value);
+                           }}   
+                           className="border w-60 md:w-80  border-white text-xl bg-white text-black font-bold outline-white px-2 py-2 rounded-xl mx-2 my-2"
+                        />
+                        {isInvalidLocation  && <span className="text-red-400 mx-10 bg-gray-200 rounded-md px-2  ">Invalid Location!</span>}
+
+                    </div>}
+                    <div className="submit-button hover:bg-transparent cursor-pointer  hover:text-white text-center h-10 rounded-mid flex items-center justify-center bg-white">
                        <button 
                        type="submit"
-                       className=" font-bold text-2xl  cursor-pointer"
+                       className=" font-bold text-2xl  hover:bg-black px-2 rounded-2xl py-2 mb-1 cursor-pointer"
                        onClick={(e) => {
                             validateForm(e);
                        }}
