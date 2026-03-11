@@ -6,17 +6,62 @@ export const Poll = () => {
     const[userSelectedOption,setUserSelectedOption] = useState(null);
     const location = useLocation();
     const pollData = location?.state;
+    console.log(pollData);
+    
     const {question} = pollData;
     const {options} = pollData;
+    const {pollId} = pollData;
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const[lastClickedRef,setLastClickedRef] = useState(null);
+    
+    const changedClikced = (e) => {
+      if(lastClickedRef === null){
+         setLastClickedRef(e);
+      }
+      else{
+        lastClickedRef.target.style.backgroundColor = "white";
+        lastClickedRef.target.style.color = "black";
+        setLastClickedRef(e);
+      }
+    }
+    // we need ref for clicking the options... 
     useEffect(()=>{
            const token = localStorage.getItem("token");
             if(token === undefined || token === null){
             navigate("/signup");
             return;
     }
-    },[]);
+    const saveUserVote = async() => {
+        try{
+          const email = localStorage.getItem("email");
+        const pollVoteRequestDTO = {
+          pollId:pollId,
+          email:email,
+          option:userSelectedOption,
+        }
+        console.log(pollVoteRequestDTO);
+        
+        const response = await fetch("http://localhost:1002/api/votePoll",{
+          method:"PUT",
+          headers:{
+            "Content-Type":"application/json",
+          },
+          body:JSON.stringify(pollVoteRequestDTO),
+        });
+        if(response.ok){
+          alert("Your voted saved!");
+        }
+        }
+        catch(e){
+          console.log(e?.message);
+          
+        }
+    }
+    if(userSelectedOption !== null){
+      saveUserVote();
+    }
+    },[userSelectedOption]);
     if(options.length < 2){
         alert("Options must be > 2!");
         navigate("/");
@@ -28,9 +73,8 @@ export const Poll = () => {
      <div 
      className="container  min-h-screen flex flex-col justify-center items-center m-0 p-0 min-w-screen bg-gradient-to-br from-[#7c42da] via-[#d11bb4] to-[#e5e500]">
         <div className="poll">
-            {/* <question styleName={}></question> */}
             <div 
-            className="question-box bg-black w-75 md:w-150 lg:w-180 text-white border px-6 py-10 wrap-break-word text-center text-3xl rounded-t-xl cursor-pointer  border-black ">
+            className="question-box bg-black w-75 md:w-150 lg:w-180 text-white border px-6 py-10 wrap-break-word text-center text-3xl rounded-t-xl   border-black ">
                 {question}
             </div>
             {/* options... */}
@@ -43,9 +87,13 @@ export const Poll = () => {
                       id={key}
                       onClick={(e) => { 
                         setIsUserSelected(true);
-                        setUserSelectedOption(e.target.id);
+                        setUserSelectedOption(parseInt(e.target.id)+1);
+                        e.target.style.backgroundColor = "black";
+                        e.target.style.color = "white";
+                        changedClikced(e);
+                        saveUserVote();
                       }}  
-                      className="text-black text-2xl hover:bg-gray-300 shadow-xl outline-gray-300 bg-gray-200 border transition border-gray-200 mx-10 my-2 rounded-2xl px-12 py-6 cursor-pointer">{item}</div>
+                      className="text-black hover:bg-gray-300 bg-gray-200  text-2xl  shadow-xl outline-gray-300 border transition border-gray-200 mx-10 my-2 rounded-2xl px-12 py-6 cursor-pointer">{item}</div>
                     ); 
                 })
                }

@@ -41,6 +41,7 @@ export const PollSaving = async(question,options,pollId,navigate) => {
                     state:{
                         question:question,
                         options:options,
+                        pollId:pollId,
                     }
         });
       }
