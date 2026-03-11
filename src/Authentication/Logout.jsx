@@ -18,12 +18,12 @@ export const Logout = () => {
                     localStorage.removeItem("email");
                     navigate("/signup")}
                    }
-                   className="border border-white text-2xl outline-white hover:opacity-70 bg-red-500 text-white px-4 py-2 rounded-xl cursor-pointer"> 
+                   className="border border-white text-2xl outline-white hover:opacity-70 bg-red-500 text-white px-2 md:px-4 py-2 rounded-xl cursor-pointer"> 
                    Yes 
                    </span>
                    <span 
                    onClick={() => navigate("/")}
-                   className="border border-white text-2xl outline-white hover:opacity-80 bg-green-500 text-white px-4 py-2 rounded-xl cursor-pointer"> No </span>
+                   className="border border-white text-2xl outline-white hover:opacity-80 bg-green-500 text-white px-2 md:px-4 py-2 md:py-2 rounded-xl cursor-pointer"> No </span>
                 </div>
             </div>
         </div>
