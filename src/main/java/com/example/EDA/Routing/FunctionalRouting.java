@@ -19,7 +19,8 @@ public class FunctionalRouting {
                         .route()
                         .path("/api",builder -> builder
                         .POST("/savePoll",pollRequestHandler::savePoll)
-                                        .GET("/getAllPolls",pollRequestHandler::getAllPolls)
+                                            .GET("/getAllPolls",pollRequestHandler::getAllPolls)
+                                        .PUT("/votePoll",pollRequestHandler::votePoll)
                         )
                         .build();
     }
