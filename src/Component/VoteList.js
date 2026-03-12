@@ -11,6 +11,9 @@ export const VoteList = async(voteList) => {
     if(response.ok){
         return response;
     }
+    else{
+        console.log(response);
+    }
     }
     catch(e){
         console.log(e.message);  

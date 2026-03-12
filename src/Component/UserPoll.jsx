@@ -12,7 +12,7 @@ export const UserPoll = () => {
         }
         const fetchUserPoll = async ()=>{
         try{
-            const response = await fetch(`http://localhost:1001/api/getUserPoll?pollID=${localStorage.getItem("email")}`,{
+            const response = await fetch(`http://localhost:1001/api/getUserPoll?email=${localStorage.getItem("email")}`,{
                 method:"GET",
                 headers:{
                     'Content-Type':'application/json'
