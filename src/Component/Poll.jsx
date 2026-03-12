@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Bar } from "../NavBar/Bar";
+import { votePoll } from "./VotePoll";
 export const Poll = () => {
     const [isUserSelected,setIsUserSelected] = useState(false);
     const[userSelectedOption,setUserSelectedOption] = useState(null);
@@ -32,34 +33,9 @@ export const Poll = () => {
             navigate("/signup");
             return;
     }
-    const saveUserVote = async() => {
-        try{
-          const email = localStorage.getItem("email");
-        const pollVoteRequestDTO = {
-          pollId:pollId,
-          email:email,
-          option:userSelectedOption,
-        }
-        console.log(pollVoteRequestDTO);
-        
-        const response = await fetch("http://localhost:1002/api/votePoll",{
-          method:"PUT",
-          headers:{
-            "Content-Type":"application/json",
-          },
-          body:JSON.stringify(pollVoteRequestDTO),
-        });
-        if(response.ok){
-          alert("Your voted saved!");
-        }
-        }
-        catch(e){
-          console.log(e?.message);
-          
-        }
-    }
+    
     if(userSelectedOption !== null){
-      saveUserVote();
+      votePoll(pollId,userSelectedOption);
     }
     },[userSelectedOption]);
     if(options.length < 2){
@@ -91,7 +67,6 @@ export const Poll = () => {
                         e.target.style.backgroundColor = "black";
                         e.target.style.color = "white";
                         changedClikced(e);
-                        saveUserVote();
                       }}  
                       className="text-black hover:bg-gray-300 bg-gray-200  text-2xl  shadow-xl outline-gray-300 border transition border-gray-200 mx-10 my-2 rounded-2xl px-12 py-6 cursor-pointer">{item}</div>
                     ); 
