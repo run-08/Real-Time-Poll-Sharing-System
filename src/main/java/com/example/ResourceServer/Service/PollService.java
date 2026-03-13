@@ -18,5 +18,6 @@ public interface PollService {
     public List<PollDTO> getPolls(String emailId);
     public List<PollDTO> getUserPoll(String emailId);
     public void deleteUser(String emailId);
+    public Integer getUserPollCount(String email);
 
 }

@@ -8,6 +8,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 @Data
@@ -24,4 +25,5 @@ public class Poll {
     @Column(name = "emailId",nullable = false)
     private String emailId;
     private LocalDateTime time;
+    private AtomicInteger no_of_votes;
 }

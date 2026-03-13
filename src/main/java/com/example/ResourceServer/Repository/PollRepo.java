@@ -18,4 +18,5 @@ public interface PollRepo extends JpaRepository<Poll,String> {
     @Transactional
     @Query("Delete from Poll p where p.emailId =:email")
     public void deleteUserPoll(@Param("email") String email);
+
 }

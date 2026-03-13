@@ -3,7 +3,6 @@ package com.example.ResourceServer.API;
 import com.example.ResourceServer.DTO.PollDTO;
 import com.example.ResourceServer.Exception.PollIDExistException;
 import com.example.ResourceServer.Exception.PollIDNotFoundedException;
-import com.example.ResourceServer.Model.Poll;
 import com.example.ResourceServer.Service.PollServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +31,8 @@ public class Endpoint {
     }
 
     @DeleteMapping("/deletePoll")
-    public ResponseEntity<PollDTO> deletePoll(String pollID) throws PollIDNotFoundedException {
-        PollDTO pollDTO = pollService.deletePoll(pollID);
+    public ResponseEntity<PollDTO> deletePoll(@RequestParam String pollID) throws PollIDNotFoundedException {
+        PollDTO pollDTO = pollService.deletePoll(pollID.trim());
         log.info("Poll id "+(pollID)+"removed from Databases!");
         return ResponseEntity.ok(pollDTO);
     }
@@ -45,8 +44,8 @@ public class Endpoint {
     }
 
     @GetMapping("/getUserPoll")
-    public ResponseEntity<List<PollDTO>> getUserPoll(@RequestParam String pollID){
-        List<PollDTO> pollDTOs  = pollService.getUserPoll(pollID);
+    public ResponseEntity<List<PollDTO>> getUserPoll(@RequestParam String email){
+        List<PollDTO> pollDTOs  = pollService.getUserPoll(email);
         return ResponseEntity.ok(pollDTOs);
     }
 
@@ -55,4 +54,11 @@ public class Endpoint {
          pollService.deleteUser(email);
          return ResponseEntity.ok("User poll deleted Successfully!");
     }
+
+    @GetMapping("/getUserPollCount")
+    public ResponseEntity<Integer> getUserPollCount(@RequestParam String email){
+       return
+               ResponseEntity.ok(pollService.getUserPollCount(email));
+    }
+
 }

@@ -6,6 +6,7 @@ import com.example.ResourceServer.Exception.PollIDNotFoundedException;
 import com.example.ResourceServer.Model.Poll;
 import com.example.ResourceServer.Repository.PollRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PollServiceImpl implements PollService{
@@ -22,6 +24,7 @@ public class PollServiceImpl implements PollService{
     public PollDTO savePoll(PollDTO pollDTO) throws PollIDExistException {
         System.out.println(pollDTO);
         Poll poll = DTOToEntity(pollDTO);
+        pollDTO.setTime(LocalDateTime.now());
         if(isIdPollExist(poll.getId())){
             throw new PollIDExistException(poll.getId());
         }
@@ -34,7 +37,7 @@ public class PollServiceImpl implements PollService{
         if(!isIdPollExist(pollId)){
             throw new PollIDNotFoundedException(pollId);
         }
-        Poll poll = repo.getReferenceById(pollId);
+        Poll poll = repo.findById(pollId).get();
         repo.deleteById(pollId);
         return EntityToDTO(poll);
     }
@@ -53,7 +56,8 @@ public class PollServiceImpl implements PollService{
 
     @Override
     public boolean isIdPollExist(String pollId) {
-        return repo.findById(pollId).isPresent();
+        Optional<Poll> poll = repo.findById(pollId);
+        return poll.isPresent();
     }
 
     @Override
@@ -90,9 +94,16 @@ public class PollServiceImpl implements PollService{
                 .toList();
     }
 
+
+
     @Override
     public void deleteUser(String emailId) {
         repo
                 .deleteUserPoll(emailId);
+    }
+
+    @Override
+    public Integer getUserPollCount(String email){
+        return getUserPoll(email).size();
     }
 }
