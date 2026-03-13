@@ -14,6 +14,7 @@ export const Bar = () => {
             onClick={()=>navigate("/userPolls")}
             >Your Polls</span>
             <span
+            onClick={()=> navigate("/userVoted")}
             className="cursor-pointer  text-2xl  underline-offset-3 hover:underline" 
             >You Voted</span>
             <span

@@ -6,6 +6,7 @@ import { HomePage } from "../Component/HomePage";
 import { Poll } from "../Component/Poll";
 import { ProfilePage } from "../Component/ProfilePage";
 import { UserPoll } from "../Component/UserPoll";
+import { UserVotedPoll } from "../Component/UserVotedPoll";
 export const AppRouter = () => {
     return (
        <Routes>
@@ -17,6 +18,7 @@ export const AppRouter = () => {
           <Route path="/userPolls" element={<UserPoll></UserPoll>}></Route>
           <Route path="/profile" element={<ProfilePage></ProfilePage>}></Route>
           <Route path="/setNewPassword" element={<NewPasswordSetter></NewPasswordSetter>}></Route>
+          <Route path="/uservoted" element={<UserVotedPoll></UserVotedPoll>}></Route>
        </Routes>  
     );
 }
