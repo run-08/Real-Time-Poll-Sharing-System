@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import GetUserPollCount from "../Authentication/GetUserPollCount";
 import { ValidateUserName } from "../Authentication/ValidateUserName";
 import { Bar } from "../NavBar/Bar";
 
@@ -52,6 +53,7 @@ export const ProfilePage = () => {
         navigate("/signup");
         return;
     }
+    GetUserPollCount();
     },[]);
     return (
         <>
@@ -107,7 +109,7 @@ export const ProfilePage = () => {
                     </div>
                     <div className="user-poll-created-count  border-b-black border-2 py-4 border-transparent">
                         <div className="user-poll-count px-2 my-2"><span className="font-bold ">Poll Created:</span> 
-                           <span > {userPollCount}  </span>
+                           <span > {localStorage.getItem("userPollCount")} </span>
                         </div>
                         <span 
                         className="manage-poll-system font-bold  text-white px-2 py-1 p-1 mx-2 rounded-xl  cursor-pointer bg-gradient-to-br from-[#2196f3] via-[#955cf4] to-[#339999]"

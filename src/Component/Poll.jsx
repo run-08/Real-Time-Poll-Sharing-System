@@ -38,11 +38,7 @@ export const Poll = () => {
       votePoll(pollId,userSelectedOption);
     }
     },[userSelectedOption]);
-    if(options.length < 2){
-        alert("Options must be > 2!");
-        navigate("/");
-        return;
-    };
+   
   return (
     <>
     <Bar></Bar>

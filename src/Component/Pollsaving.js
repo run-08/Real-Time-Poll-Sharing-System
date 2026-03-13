@@ -1,6 +1,5 @@
-import { DeletePoll } from "./DeletPoll";
+import GetUserPollCount from "../Authentication/GetUserPollCount";
 import { VoteList } from "./VoteList";
-
 export const PollSaving = async(question,options,pollId,navigate) => {
     const modifiedOptions = Object.values(options).join(", ");
     console.log(options);
@@ -14,6 +13,12 @@ export const PollSaving = async(question,options,pollId,navigate) => {
      }
      console.log(data);
      try{
+      console.log(options.length);
+      
+      if(options.length < 2){     
+         navigate("/");
+         return;
+      }
        const response = await fetch(`http://localhost:1001/api/savePoll`,{
         method:"POST",
         headers:{
@@ -35,6 +40,7 @@ export const PollSaving = async(question,options,pollId,navigate) => {
          options:voterListoptions,
          voted:{} 
       }
+      GetUserPollCount();
       const voteListResponse = await VoteList(voteList);
       if(voteListResponse?.ok){
          navigate(`poll/${pollId}`,{
@@ -47,8 +53,6 @@ export const PollSaving = async(question,options,pollId,navigate) => {
       }
      }
      else{
-      // delete the poll id in Resource server and alert...
-      DeletePoll(pollId);
       alert("Failed to create your poll!")
      }    
      }

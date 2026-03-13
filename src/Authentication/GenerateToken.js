@@ -1,3 +1,5 @@
+import GetUserPollCount from "./GetUserPollCount";
+
 export const GenerateToken = async({formData,isSignUp}) => {
     try{
         const URL = `http://localhost:1000/api/${isSignUp ? "signup":"login"}`
@@ -28,6 +30,8 @@ export const GenerateToken = async({formData,isSignUp}) => {
         }
         alert("Logged successfully!");
         localStorage.setItem("email",formData.email);
+        // call resource server for managing the userPollCount... 
+        GetUserPollCount();
     }
     catch(error){
         console.log("Error: ",error);

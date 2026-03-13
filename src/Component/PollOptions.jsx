@@ -10,7 +10,13 @@ export const PollOptions = ({question}) => {
    const token = localStorage.getItem("token");
 
     const savePollInDB =  () => {
-        PollSaving(question,options,pollId,navigate);
+       if(options.length < 2){
+        alert("Options must be > 2!");
+        navigate("/");
+        return;
+       }
+       PollSaving(question,options,pollId,navigate);
+       
     } 
    const[pollId,setPollId] = useState(null)
   useEffect(()=>{
