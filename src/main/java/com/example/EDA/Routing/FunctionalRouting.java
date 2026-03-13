@@ -23,6 +23,9 @@ public class FunctionalRouting {
                         .POST("/savePoll",pollRequestHandler::savePoll)
                                             .GET("/getAllPolls",pollRequestHandler::getAllPolls)
                                         .PUT("/votePoll",pollRequestHandler::votePoll)
+                                .DELETE("/deletePollById",pollRequestHandler::deletePollById)
+                                        .POST("/isPollIdExists",pollRequestHandler::isPollIdsExist)
+                                        .GET("/getUserVotedPoll",pollRequestHandler::getUserVotedPoll)
                         )
                         .build();
     }
